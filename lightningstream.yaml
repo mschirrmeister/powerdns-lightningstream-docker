@@ -1,0 +1,37 @@
+#
+instance: lmdbsync
+lmdbs:
+  main:
+    path: /var/lib/powerdns/pdns.lmdb
+    schema_tracks_changes: true
+    options:
+      no_subdir: true
+      create: true
+  shard:
+    path: /var/lib/powerdns/pdns.lmdb-0
+    schema_tracks_changes: true
+    options:
+      no_subdir: true
+      create: true
+
+storage:
+  type: s3
+  options:
+    access_key: username
+    secret_key: password
+    bucket: lightningstream
+    endpoint_url: http://10.0.3.194:9000
+    create_bucket: true
+  cleanup:
+    enabled: true
+    interval: 15m
+    must_keep_interval: 24h
+    remove_old_instances_interval: 168h
+
+http:
+  address: ":8500"
+
+log:
+   level: debug
+   format: human
+   timestamp: short
